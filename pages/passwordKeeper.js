@@ -106,7 +106,8 @@ export default function BasicTable() {
   }, []);
 
   const changeVisibility = async (selectedPass) => {
-    const accounts = await sdk.connect();
+    try {
+      const accounts = await sdk.connect();
 
     const messageRequested = (await lighthouse.getAuthMessage(accounts[0])).data
       .message;
@@ -135,6 +136,9 @@ export default function BasicTable() {
         : item
     );
     setPasswordData(newPass);
+    } catch (error) {
+      alert("This is not your password!")
+    }
   };
 
   const addNewPass = async () => {
