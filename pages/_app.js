@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta charset='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-        <title>Password Keeper</title>
+        <title>PKeep - Unleash Decentalized Safety</title>
       </Head>
       <Card>
         <main style={{ minHeight: 'calc(100vh - 65px)' }}>
@@ -20,10 +20,10 @@ function MyApp({ Component, pageProps }) {
               src={'/icons/logo.jpeg'}
               alt='logo'
               loading='lazy'
-              height='40px'
+              height='100px'
             />
             <Typography variant='h4' component='h1'>
-              Password Keeper
+            PKeep - Unleash Decentalized Safety
             </Typography>
             <div style={{ width: '70px' }} />
           </header>
@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }) {
           </div>
         </main>
         <footer class='main-footer'>
-          <p>&copy; 2023 Your Website. All rights reserved.</p>
+          <p>&copy; 2023 PKeep All rights reserved.</p>
         </footer>
       </Card>
     </>
