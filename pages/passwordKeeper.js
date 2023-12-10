@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from "react";
-import Box from "@mui/system/Box";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Button, TextField, InputAdornment } from "@mui/material";
-import { IconButton } from "@mui/joy";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { MetaMaskSDK } from "@metamask/sdk";
-import lighthouse from "@lighthouse-web3/sdk";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Box from '@mui/system/Box';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Button, TextField, InputAdornment } from '@mui/material';
+import { IconButton } from '@mui/joy';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { MetaMaskSDK } from '@metamask/sdk';
+import lighthouse from '@lighthouse-web3/sdk';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
-const LIGHTHOUSE_API_KEY_OLD = "e77de238.d80129659a504ce6bd0b2fa5e5081475";
-const LIGHTHOUSE_API_KEY = "920df0ff.6c00853f66bd4e97bb14865295b05fd1";
+const LIGHTHOUSE_API_KEY_OLD = 'e77de238.d80129659a504ce6bd0b2fa5e5081475';
+const LIGHTHOUSE_API_KEY = '920df0ff.6c00853f66bd4e97bb14865295b05fd1';
 
 function createData(label, password) {
   return { label, password, showPassword: false };
@@ -41,18 +43,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
+  '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
-  "&:last-child td, &:last-child th": {
+  '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
 export default function BasicTable() {
   const [passwordData, setPasswordData] = useState(rows);
-  const [label, setLabel] = useState("");
-  const [password, setPassword] = useState("");
+  const [label, setLabel] = useState('');
+  const [password, setPassword] = useState('');
 
   const [sdk, setSDK] = useState();
 
@@ -66,8 +68,8 @@ export default function BasicTable() {
           enabled: true,
         },
         dappMetadata: {
-          name: "NEXTJS demo",
-          url: "https://localhost:3000",
+          name: 'NEXTJS demo',
+          url: 'https://localhost:3000',
         },
         logging: {
           developerMode: false,
@@ -81,7 +83,7 @@ export default function BasicTable() {
 
       const accounts = await clientSDK.connect();
       const publicKey = await window.ethereum.request({
-        method: "eth_getEncryptionPublicKey",
+        method: 'eth_getEncryptionPublicKey',
         params: [accounts[0]],
       });
 
@@ -93,7 +95,7 @@ export default function BasicTable() {
 
           newPass.push({
             label: element.fileName,
-            password: "",
+            password: '',
             showPassword: false,
             cid: element.cid,
           });
@@ -109,35 +111,35 @@ export default function BasicTable() {
     try {
       const accounts = await sdk.connect();
 
-    const messageRequested = (await lighthouse.getAuthMessage(accounts[0])).data
-      .message;
+      const messageRequested = (await lighthouse.getAuthMessage(accounts[0]))
+        .data.message;
 
-    const msg = `0x${Buffer.from(messageRequested, "utf8").toString("hex")}`;
+      const msg = `0x${Buffer.from(messageRequested, 'utf8').toString('hex')}`;
 
-    const signResult = await ethereum.request({
-      method: "personal_sign",
-      params: [msg, accounts[0]],
-    });
-    const fileEncryptionKey = await lighthouse.fetchEncryptionKey(
-      selectedPass.cid,
-      accounts[0],
-      signResult
-    );
+      const signResult = await ethereum.request({
+        method: 'personal_sign',
+        params: [msg, accounts[0]],
+      });
+      const fileEncryptionKey = await lighthouse.fetchEncryptionKey(
+        selectedPass.cid,
+        accounts[0],
+        signResult
+      );
 
-    const decrypted = await lighthouse.decryptFile(
-      selectedPass.cid,
-      fileEncryptionKey.data.key
-    );
-    const value = await decrypted.text();
+      const decrypted = await lighthouse.decryptFile(
+        selectedPass.cid,
+        fileEncryptionKey.data.key
+      );
+      const value = await decrypted.text();
 
-    const newPass = passwordData.map((item) =>
-      item.label === selectedPass.label
-        ? { ...item, showPassword: !item.showPassword, password: value }
-        : item
-    );
-    setPasswordData(newPass);
+      const newPass = passwordData.map((item) =>
+        item.label === selectedPass.label
+          ? { ...item, showPassword: !item.showPassword, password: value }
+          : item
+      );
+      setPasswordData(newPass);
     } catch (error) {
-      alert("This is not your password!")
+      alert('This is not your password!');
     }
   };
 
@@ -151,10 +153,10 @@ export default function BasicTable() {
       const messageRequested = (await lighthouse.getAuthMessage(accounts[0]))
         .data.message;
 
-      const msg = `0x${Buffer.from(messageRequested, "utf8").toString("hex")}`;
+      const msg = `0x${Buffer.from(messageRequested, 'utf8').toString('hex')}`;
 
       const signResult = await ethereum.request({
-        method: "personal_sign",
+        method: 'personal_sign',
         params: [msg, accounts[0]],
       });
 
@@ -173,43 +175,49 @@ export default function BasicTable() {
 
       setPasswordData(newPass);
     } catch (error) {
-      console.error("Error in signing:", error);
+      console.error('Error in signing:', error);
     }
   };
 
   return (
     <>
+      <Link href='/'>
+        <Button variant='text'>
+          <KeyboardArrowLeftIcon /> Back
+        </Button>
+      </Link>
+
       <Box my={10}>
         <Box>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 400 }} aria-label="customized table">
+            <Table sx={{ minWidth: 400 }} aria-label='customized table'>
               <TableHead>
                 <StyledTableRow>
-                  <StyledTableCell align="center">Label</StyledTableCell>
-                  <StyledTableCell align="center">Password</StyledTableCell>
+                  <StyledTableCell align='center'>Label</StyledTableCell>
+                  <StyledTableCell align='center'>Password</StyledTableCell>
                 </StyledTableRow>
               </TableHead>
               <TableBody>
                 {passwordData.map((row, index) => (
                   <StyledTableRow
                     key={row.label}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <StyledTableCell align="center" component="th" scope="row">
+                    <StyledTableCell align='center' component='th' scope='row'>
                       {row.label}
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align='center'>
                       <TextField
                         disabled
-                        variant="outlined"
-                        type={row.showPassword ? "text" : "password"}
+                        variant='outlined'
+                        type={row.showPassword ? 'text' : 'password'}
                         value={row.password}
                         // onChange={someChangeHandler}
                         InputProps={{
                           endAdornment: (
-                            <InputAdornment position="end">
+                            <InputAdornment position='end'>
                               <IconButton
-                                aria-label="toggle password visibility"
+                                aria-label='toggle password visibility'
                                 onClick={() => changeVisibility(row)}
                                 // onMouseDown={handleMouseDownPassword}
                               >
@@ -230,30 +238,30 @@ export default function BasicTable() {
             </Table>
           </TableContainer>
         </Box>
-        <Box display="flex" justifyContent="center" my="20px">
+        <Box display='flex' justifyContent='center' my='20px'>
           <TextField
-            sx={{ marginRight: "15px" }}
-            align="center"
-            id="outlined-basic"
-            label="Label"
-            variant="outlined"
+            sx={{ marginRight: '15px' }}
+            align='center'
+            id='outlined-basic'
+            label='Label'
+            variant='outlined'
             onChange={(e) => setLabel(e.target.value)}
             value={label}
           />
 
           <TextField
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
+            id='outlined-basic'
+            label='Password'
+            variant='outlined'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
         </Box>
 
         <Button
-          sx={{ float: "right", marginRight: "25vw" }}
-          variant="contained"
-          color="success"
+          sx={{ float: 'right', marginRight: '25vw' }}
+          variant='contained'
+          color='success'
           onClick={addNewPass}
         >
           Add
