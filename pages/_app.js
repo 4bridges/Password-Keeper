@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
               src={'/icons/logo.jpeg'}
               alt='logo'
               loading='lazy'
-              height='100px'
+              height='200px'
             />
             <Typography variant='h4' component='h1'>
             PKeep - Unleash Decentalized Safety
