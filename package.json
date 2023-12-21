@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "next dev -p 9090",
+    "build": "next build -p 9090",
+    "start": "next start -p 9090",
     "lint": "next lint"
   },
   "keywords": [],

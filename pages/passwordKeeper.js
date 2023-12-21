@@ -69,7 +69,7 @@ export default function BasicTable() {
         },
         dappMetadata: {
           name: 'NEXTJS demo',
-          url: 'https://localhost:3000',
+          url: 'https://localhost:9990',
         },
         logging: {
           developerMode: false,
